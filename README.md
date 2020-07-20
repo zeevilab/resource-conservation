@@ -9,9 +9,6 @@ Correspondence to: dzeevi@rockefeller.edu
 
 **What this is.** This is the computational pipeline used to process and analyze metagenomic data used in this manuscript. By downloading the code and following the instructions below, you will be able to replicate the results reported in this work. If you are proficient in python, you will also be able to manipulate this code for a SNP-level analysis of marine microbes from metagenomic samples. 
 
-**What this is not.** This is not software. Please do not expect to press 'GO' and get all the analyses printed out on the screen. Running this requires some know how and configuration work. It also requires significant computing power. Running the data processing and analyses below would take more than 100,000 CPU hours, a significant amount of RAM and about 35TB of space. So please do not run on your home PC unless you have 11 years to spare.
-
-
 ## Instructions for replication
 ### Get the code
 `git clone https://github.com/zeevilab/resource-conservation.git` 
@@ -47,7 +44,7 @@ Download metadata for Tara oceans, GEOTRACES, HOT and BATS into separate folders
 	* Download all ASCII records into a separate folder.
 * GEOTRACES data from https://www.bodc.ac.uk/geotraces/data/idp2017/:
 	* Download GEOTRACES IDP2017 v2 discrete sample data in ASCII format.
-	* Download GEOTRACES IDP2017 v2 CTD data in ASCII format.
+	* Download GEOTRACES IDP2017 v1 CTD sensor data in ASCII format.
 * TARA oceans data from PANGAEA:
 	* Samples context sequencing: https://doi.pangaea.de/10.1594/PANGAEA.875581
 	* Carbonate chemistry: https://doi.pangaea.de/10.1594/PANGAEA.875567
@@ -57,8 +54,8 @@ Download metadata for Tara oceans, GEOTRACES, HOT and BATS into separate folders
 
 ### Get the OM-RGC database, index it and run eggNOG-mapper on it
 * Get the OM-RGC database here: http://ocean-microbiome.embl.de/companion.html as a tab-delimited file.
-* Create a FASTA file from the tab delimited file containing the samples, where the id of each sequence is the OM-RGC_ID (column 1) and the sequence is the sequence (column 13), as specified here: http://ocean-microbiome.embl.de/data/OM-RGC_Readme.release.txt
-
+* Create a FASTA file from the tab delimited file containing the samples, where the id of each sequence is the OM-RGC_ID (column 1) and the sequence is the sequence (column 13), as specified here: http://ocean-microbiome.embl.de/data/OM-RGC_Readme.release.txt.
+* Index the FASTA file using bowtie2_build
 
 ### Edit the config file
 
@@ -69,6 +66,7 @@ Download metadata for Tara oceans, GEOTRACES, HOT and BATS into separate folders
 
 
 ### Run data creation pipelines
+#### MetadataPipe.py
 #### MappingPipe.py
 #### CallingPipe.py
 #### SNPPipe.py
