@@ -62,7 +62,7 @@ The configuration file config.py holds all dataset locations, metadata locations
 
 ### Configure your HPC system
 Running the data creation pipelines can be a lengthy process. It is advisable to configurate it to run on a multi-CPU machine with sufficient memory. We ran it on a computational cluster with 56 nodes, each with 24 CPUs and 256GB RAM, and an additional 'fat' node with 64 CPUs and 3TB RAM.
-As different HPCs run different job scheduling software, we have noted in our data creation pipelines the labor intensive positions in the code where a "for" loop should be replaced with adequate HPC job scheduling to significantly cut running time. Follow comments in Pipe files listed below.
+As different HPCs run different job scheduling software, we have noted in our data creation pipelines the labor intensive positions in the code where a *for* loop should be replaced with adequate HPC job scheduling to significantly cut running time. Follow comments in Pipe files listed below.
 
 ### Run data creation pipelines
 #### MetadataPipe.py
