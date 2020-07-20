@@ -58,19 +58,16 @@ Download metadata for Tara oceans, GEOTRACES, HOT and BATS into separate folders
 * Index the FASTA file using bowtie2_build
 
 ### Edit the config file
-
-
+The configuration file config.py holds all dataset locations, metadata locations, locations for temporary files and parameters used. Edit config.py as directed in comments within the file to point to your downloaded resources above. *It is very important to take care linking to the correct resources as all the following steps depend on this*.
 
 ### Configure your HPC system
-
-
+Running the data creation pipelines can be a lengthy process. It is advisable to configurate it to run on a multi-CPU machine with sufficient memory. We ran it on a computational cluster with 56 nodes, each with 24 CPUs and 256GB RAM, and an additional 'fat' node with 64 CPUs and 3TB RAM.
+As different HPCs run different job scheduling software, we have noted in our data creation pipelines the labor intensive positions in the code where a "for" loop should be replaced with adequate HPC job scheduling to significantly cut running time. Follow comments in Pipe files listed below.
 
 ### Run data creation pipelines
 #### MetadataPipe.py
 #### MappingPipe.py
 #### CallingPipe.py
 #### SNPPipe.py
-
-
 
 ### Run the analysis pipelines
