@@ -14,6 +14,7 @@ Correspondence to: dzeevi@rockefeller.edu
 `git clone https://github.com/zeevilab/resource-conservation.git` 
 
 ### Install required software, packages and dependencies
+* This pipeline was run with Python 3.6.9 (Anaconda). eggNOG mapper was run using Python 2.7.
 * Python packages: 
 	* numpy (1.17.2)
 	* pandas (0.25.1)
@@ -52,7 +53,7 @@ Download metadata for Tara oceans, GEOTRACES, HOT and BATS into separate folders
 	* HPLC: https://doi.pangaea.de/10.1594/PANGAEA.875569
 	* Station registry: https://doi.pangaea.de/10.1594/PANGAEA.842227
 
-### Get the OM-RGC database, index it and run eggNOG-mapper on it
+### Get the OM-RGC database and index it
 * Get the OM-RGC database here: http://ocean-microbiome.embl.de/companion.html as a tab-delimited file.
 * Create a FASTA file from the tab delimited file containing the samples, where the id of each sequence is the OM-RGC_ID (column 1) and the sequence is the sequence (column 13), as specified here: http://ocean-microbiome.embl.de/data/OM-RGC_Readme.release.txt.
 * Index the FASTA file using bowtie2_build
