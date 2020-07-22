@@ -3,7 +3,7 @@ by Liat Shenhav and David Zeevi
 
 DOI: http://biorxiv.org/lookup/doi/10.1101/790345
 
-Correspondence to: dzeevi@rockefeller.edu
+Correspondence to: lshenhav@rockefeller.edu, dzeevi@rockefeller.edu
 
 ## Overview
 
@@ -67,8 +67,19 @@ As different HPCs run different job scheduling software, we have noted in our da
 
 ### Run data creation pipelines
 #### MetadataPipe.py
+The metadata and annotation pipeline prepares all the necessary data for running the following pipelines. It has two main parts parts:
+1. Concentrating all the relevant metadata in one place:
+	1. It reads the sample sheet saved from ENA and creates a reference for all files to be used in the pipeline.
+	1. It takes the relevant environmental measurements from the data downloaded from Tara, GEOTRACES, ALOHA and BATS.
+1. Annotating the OM-RGC database with eggnog-mapper.
+
 #### MappingPipe.py
+The mapping pipeline aligns reads from all sources to the OM-RGC database. It then runs ICRA on it (Zeevi et al., Nature 2019) to correct read assignment and updates BAM files resulting from the mapping with the probability of alignment for each read to each OM-RGC gene.
+
 #### CallingPipe.py
+The calling pipeline sorts and filters each BAM file, and then splits it into chunks according to genes to which reads map. It then runs bcftools on each of the chunks to call variants across all samples.
+
 #### SNPPipe.py
+The SNP pipeline filters variants according to filtering thresholds defined in the config file. For each gene, it calculates population genomic markers (pN/pS, pi) and then unites genes according to KEGG and eggNOG orthologous groups. The output of this stage are matrices for each of the markers and each of the OG databases (KEGG/eggNOG).
 
 ### Run the analysis pipelines
