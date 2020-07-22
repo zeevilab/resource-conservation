@@ -6,6 +6,7 @@ from Data.Metadata.KEGGAnnotate import translate_db, split_database, eggnog_map_
 from glob import glob
 from os.path import join, exists
 from lib.Utils import split3way
+from Data.Metadata.UniteMetadata import unite_sampledata, unite_measurements
 
 def metadata():
     # Get Tara metadata
@@ -18,6 +19,9 @@ def metadata():
     extract(RawFastq.bioGEOTRACES, Biodata.bioGEOTRACES)
     get_measurements_BATS()
     get_measurements_HOT()
+    # Unite metadata from all sources
+    unite_sampledata()
+    unite_measurements()
     
 def annotate():
     translate_db(Annotate.OM_RGC.IndexFasta, Annotate.OM_RGC.IndexFaa)

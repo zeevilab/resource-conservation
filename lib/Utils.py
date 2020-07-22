@@ -12,7 +12,7 @@ from pandas.io.pickle import to_pickle
 log_ = logging.getLogger(__name__)
 del logging
 GZIP_EXT = '.gz'
-# 
+
 def Write(outfile, datastruct, exceptiononmissingdir = False):
     dname, _ = os.path.split(outfile)
     if dname != '' and not os.path.exists(dname):
@@ -23,6 +23,7 @@ def Write(outfile, datastruct, exceptiononmissingdir = False):
             dill.dump(datastruct, pkl_file, -1)
     except:
         to_pickle(datastruct, outfile)
+        
 def Load(infile, log = False):
     a = datetime.now()
     try:

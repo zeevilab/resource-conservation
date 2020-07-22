@@ -1,7 +1,7 @@
 from pandas.core.reshape.concat import concat
-from RawData.config import Biodata
 from pandas.io.pickle import read_pickle
 import numpy as np
+from Data.config import Biodata
 
 DEPTH = 'Depth_m'
 TEMPERATURE = 'Temperature_degC'
@@ -19,7 +19,6 @@ def unite_sampledata():
             sort=False).to_pickle(Biodata.United.metadataDF)
 
 def unite_measurements():
-    
     biog = read_pickle(Biodata.bioGEOTRACES.SampleMeasurementsDF)\
             .rename(columns = {'DEPTH [m]':DEPTH, 'CTDTMP [deg C]':TEMPERATURE, 
                                'CTDSAL':SALINITY, 'CTDOXY [umol/kg]':OXYGEN,
@@ -35,7 +34,6 @@ def unite_measurements():
                                '[NO3]- [µmol/l]_median':NITRATE,
                                'Nitrate and Nitrite_median':NITRIRA}) #umol/l
     tara[SILICATE] = tara[SILICATE].astype(float)
-    #TODO: convert to umol/l
     bats = read_pickle(Biodata.ALOHA_BATS.BATSSampleMeasurementsDF)\
             .rename(columns = {'Depth':DEPTH, 'Temperature [c]':TEMPERATURE, 
                                'Salinity':SALINITY, 'Oxygen [umol/kg]':OXYGEN,
@@ -58,6 +56,3 @@ def unite_measurements():
             [[DEPTH,TEMPERATURE,SALINITY,OXYGEN,PHOSPHATE,SILICATE,NITRATE,NITRIRA]]\
             .to_pickle(Biodata.United.SampleMeasurementsDF)
     
-if __name__ == '__main__':
-    unite_sampledata()
-#     unite_measurements()
