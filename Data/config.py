@@ -57,7 +57,7 @@ class Biodata:
     class United:
         metadataDF = join(General.Basepath, 'United_md.df')
         SampleMeasurementsDF = join(General.Basepath, 'United_sample_meas.df')
-        
+     
 class RawFastq:
     # TODO: replace BasedDir and FastqDir in the following classes with where you place fastq
     # files for each of the datasets. Save sample sheet from ENA and have the SampleSheet
@@ -133,7 +133,19 @@ class SNP:
 class Analysis:
     class SNP:
         CountDir = join(General.Tmppath, 'OM-RGC_SNPCount')
-        
+
+class Annotate:
+    class OM_RGC:
+        IndexFasta = Mapping.OM_RGC.IndexFasta
+        IndexFaa = IndexFasta.replace('fasta','faa')
+        SplitDir = mkdirifnotexists(Mapping.OM_RGC.IndexFasta, 'split')
+        AnnotDir = mkdirifnotexists(Mapping.OM_RGC.IndexFasta, 'annot')
+        EggnogDir = mkdirifnotexists(Mapping.OM_RGC.IndexFasta, 'eggnog')
+        # TODO: change these to the directory and python file of eggnog-mapper
+        EmapperDir = '~/eggnog/eggnog-mapper'
+        EmapperPy = join(EmapperDir, 'emapper.py')
+        # TODO: change this to python2.7 path
+        Py27 = '~/anaconda3/envs/py27/bin/python'   
 #            
 # class StrainGenes:
 #     DBDir = join(General.Scratch, 'Data','Databases','GORG')
