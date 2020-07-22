@@ -21,6 +21,7 @@ class General:
     
     
 class Biodata:
+    #TODO: link here to all downloaded metadata. Rename resulting dataframes at will.
     SampleInfoDF = join(General.Basepath, 'SampleInfo.df')
     class bioGEOTRACES:
         metadataDF = join(General.Basepath, 'bioGEOTRACES_md.df')
@@ -81,9 +82,6 @@ class Mapping:
         IndexFasta = join(IndexDir,'OM-RGC_seq.fasta')
         LengthsFile = join(Mapping.OM_RGC.IndexDir,'OM-RGC_seq.lens')
         MapDir = mkdirifnotexists(join(General.Tmppath,'OM-RGC_Mapping'))
-        MapDirDWH = mkdirifnotexists(join(General.Tmppath,'OM-RGC_MappingDWH'))
-        MapDirCOP = mkdirifnotexists(join(General.Tmppath,'OM-RGC_MappingCOP'))
-        MapDirPlast = mkdirifnotexists(join(General.Tmppath,'OM-RGC_MappingPlastic'))
         MapParams = dict(preset=MapPreset.SENSITIVE, report_alns=20, minins=0, maxins=500, 
                          no_mixed=False, no_discordant=False, dovetail=False, no_contain=False, 
                          no_overlap=False)
