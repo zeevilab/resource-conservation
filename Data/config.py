@@ -146,16 +146,3 @@ class Annotate:
         EmapperPy = join(EmapperDir, 'emapper.py')
         # TODO: change this to python2.7 path
         Py27 = '~/anaconda3/envs/py27/bin/python'   
-#            
-# class StrainGenes:
-#     DBDir = join(General.Scratch, 'Data','Databases','GORG')
-#     GenesTSV = join(DBDir, 'GORG_v1.tsv.gz')
-#     SAGXLS = join(DBDir, 'gorg-tropics_sags_tableS2.xlsx')
-#     MinStrainsPerGene = 20
-#     MinStrainsPerGeneSubgrp = 10
-#     AnalysisBase = mkdirifnotexists(join(General.Tmppath, 'GORG'))
-#     FilteredSeqs = mkdirifnotexists(join(AnalysisBase, 'FiltSeqs'))
-#     MSAs = mkdirifnotexists(join(AnalysisBase, 'MSAs'))
-#     Trees = mkdirifnotexists(join(AnalysisBase, 'Trees'))
-#     DFs = mkdirifnotexists(join(AnalysisBase, 'DFs'))
-#     dNdSDir = mkdirifnotexists(join(AnalysisBase, 'dNdSDir'))
