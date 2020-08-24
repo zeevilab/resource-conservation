@@ -1,11 +1,10 @@
 from pandas.io.excel import read_excel
-from RawData.config import Biodata, RawFastq, Mapping
 from pandas.io.parsers import read_csv
 from os.path import basename, join
 from datetime import datetime
-from glob import glob
 from pandas.io.pickle import read_pickle
 from pandas.core.reshape.concat import concat
+from Data.config import Biodata, RawFastq, Mapping
 
 def _fix_header(dataline):
     def getstatfromline(line):
@@ -92,11 +91,3 @@ def get_measurements_TARA():
             carbchem.loc[tara_md.groupby(level=0).first().index].loc[tara_ixs].iloc[:,16:],
             hplc.loc[tara_md.groupby(level=0).first().index].loc[tara_ixs].iloc[:,16:]], axis=1)\
         .to_pickle(Biodata.TARA.SampleMeasurementsDF)
-    
-def main():
-    barcodes = getbasemetadata()
-    get_measurements_TARA()
-    
-    
-if __name__ == '__main__':
-    main()

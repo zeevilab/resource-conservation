@@ -5,13 +5,13 @@ import numpy as np
 import re
 from pandas.core.series import Series
 from os.path import join, basename
-from RawData.config import Biodata, RawFastq, Mapping
 from pandas.io.parsers import read_csv
 from pandas.io.pickle import read_pickle
 from datetime import datetime, timedelta
-from pandas.tools.merge import concat
 from glob import glob
 from xarray.backends.api import open_dataset
+from Data.config import Mapping, Biodata
+from pandas.core.reshape.concat import concat
 
 def _get_latlon(x):
     m = re.search(r"(\d+\.?\d*)\s?([NS])\s(\d+\.?\d*)\s?([EW])", x)
@@ -177,10 +177,3 @@ def get_measurements_BATS():
         ret[nm[0]] = concat([ctdrow, botrow[10:]])
     DataFrame({k:v for k,v in ret.items() if type(v) == Series}).T\
         .to_pickle(Biodata.ALOHA_BATS.BATSSampleMeasurementsDF)
-
-if __name__ == '__main__':
-#     extract(RawFastq.ALOHA_BATS, Biodata.ALOHA_BATS)
-#     extract(RawFastq.bioGEOTRACES, Biodata.bioGEOTRACES)
-    get_measurements_GEOTRACES(depth_tolerance=5)
-#     get_measurements_BATS()
-#     get_measurements_HOT()

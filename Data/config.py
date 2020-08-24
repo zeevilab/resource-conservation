@@ -145,4 +145,7 @@ class Annotate:
         EmapperDir = '~/eggnog/eggnog-mapper'
         EmapperPy = join(EmapperDir, 'emapper.py')
         # TODO: change this to python2.7 path
-        Py27 = '~/anaconda3/envs/py27/bin/python'   
+        Py27 = '~/anaconda3/envs/py27/bin/python'
+        
+class CodeAnalysis:
+    CodonsDir = mkdirifnotexists(General.Tmppath, 'Codons')

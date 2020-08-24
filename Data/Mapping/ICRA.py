@@ -167,10 +167,10 @@ def _get_opt_gigar_array(seqdict, dest_id, strand, pos, mismatches, seq, gigar):
     if '>' in gigar:
         lseq = len(seq)
         genesq, start, end, strand = seqdict.get_sequence(dest_id, strand, pos, lseq)
-        return gqa.get_opt_gigar_array(seqdict.get_len(dest_id),genesq, start, end,
+        return gqa.get_opt_gigar_array(seqdict.get_len(dest_id),genesq, start, end,  # @UndefinedVariable
                                                                  strand, gigar, lseq, seq, mismatches)
     else:
-        return gqa.create_gigar_array(gigar), 0
+        return gqa.create_gigar_array(gigar), 0  # @UndefinedVariable
   
 def get_size(obj, seen=None):
     """Recursively finds size of objects in bytes"""

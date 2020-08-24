@@ -11,7 +11,6 @@ from pandas.io.pickle import read_pickle
 from lib.Utils import split3way, rmrf, chdirmkifnotexist, shell_command, Write
 from Data.config import Annotate
 
-
 def translate_db(db_in, db_out):
     with open(db_out, 'w') as fout:
         for rec in SeqIO.parse(db_in, 'fasta'):
