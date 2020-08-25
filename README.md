@@ -28,6 +28,7 @@ Correspondence to: lshenhav@rockefeller.edu, dzeevi@rockefeller.edu
 	* samtools (1.8)
 	* bcftools (1.6)
 	* eggNOG-mapper
+	* gcta (1.92.2)
 * Build cython files in directory Data/Mapping/cy_ext_seq by running setup.py (this may raise an error if your system is missing a C++ compiler - do not ignore it). 
 
 ### Get the data
