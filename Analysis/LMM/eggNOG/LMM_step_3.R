@@ -92,13 +92,12 @@ if(any(eval) < 0){
 
 #one variance component
 if(multi_GRM_flag == 1){
-  config_flag = "2_GRM"
+  config_flag = "1_GRM_FF"
   TE_path = "eggNOG_explainability"
 }else{
   config_flag = "1_GRM"
   TE_path = "eggNOG_explainability"
 }
-
 
 if(dir.exists(file.path(paste0(dir_path, "/", TE_path)))){
   
