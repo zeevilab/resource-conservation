@@ -91,7 +91,7 @@ The SNP pipeline filters variants according to filtering thresholds defined in t
 chmod +x run_LMM_eggNOG.sh
 chmod +x run_LMM_KEGG.sh
 ```
-2. Execute:
+2. Run LMM:
 
 ```
 ./run_LMM_eggNOG.sh [project_directory_path] [pN/pS_eggNOG_data_file_path] [metadata_file_path] [gene_expression_data_file_path]
