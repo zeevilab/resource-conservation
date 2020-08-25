@@ -86,13 +86,15 @@ The SNP pipeline filters variants according to filtering thresholds defined in t
 ### Run the analysis pipelines
 #### Linear mixed models (LMM)
 
-1. Change permissions by executing the following commands
+The R and shell scripts in directory Analysis/LMM group all the analyses performed using linear mixed models. These should be run only after running all of the data creation pipelines. To automatically run these analyses:
+
+1. Change permissions by executing the following commands - 
 
 ```
 chmod +x run_LMM_eggNOG.sh
 chmod +x run_LMM_KEGG.sh
 ```
-2. Run LMM:
+2. Run LMM - 
 
 ```
 ./run_LMM_eggNOG.sh [project_directory_path] [pN/pS_eggNOG_data_file_path] [metadata_file_path] [gene_expression_data_file_path]
