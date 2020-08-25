@@ -83,3 +83,9 @@ The calling pipeline sorts and filters each BAM file, and then splits it into ch
 The SNP pipeline filters variants according to filtering thresholds defined in the config file. For each gene, it calculates population genomic markers (pN/pS, pi) and then unites genes according to KEGG and eggNOG orthologous groups. The output of this stage are matrices for each of the markers and each of the OG databases (KEGG/eggNOG).
 
 ### Run the analysis pipelines
+#### Linear mixed models (LMM)
+Lorem ipsum
+#### Genetic code analyses
+The python file CodeAnalysisPipe.py in directory Analysis/GeneticCode groups all the analyses performed
+regarding the genetic code. These should be run only after running all of the data creation pipelines.
+In addition, a configuration of the HPC system is required to run these analyses.
