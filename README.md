@@ -84,7 +84,23 @@ The SNP pipeline filters variants according to filtering thresholds defined in t
 
 ### Run the analysis pipelines
 #### Linear mixed models (LMM)
-Lorem ipsum
+
+1. Change permissions by executing the following commands
+
+```
+chmod +x run_LMM_eggNOG.sh
+chmod +x run_LMM_KEGG.sh
+```
+2. Execute:
+
+```
+./run_LMM_eggNOG.sh[your_directory_path] [pN/pS_eggNOG_data_file_path] [metadata_file_path] [gene_expression_data_file_path]
+./run_LMM_KEGG.sh[your_directory_path] [pN/pS_KEGG_data_file_path] [metadata_file_path] [gene_expression_data_file_path]
+```
+
+
+
+
 #### Genetic code analyses
 The python file CodeAnalysisPipe.py in directory Analysis/GeneticCode groups all the analyses performed
 regarding the genetic code. These should be run only after running all of the data creation pipelines.
