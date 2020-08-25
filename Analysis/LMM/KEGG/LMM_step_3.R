@@ -1,23 +1,22 @@
 # rm(list = ls())
 # gc()
-# 
-# args = commandArgs(trailingOnly=TRUE)
-# print(args)
+
+args = commandArgs(trailingOnly=TRUE)
+print(args)
 
 
-dir_path = "~/Dropbox/2019-OceanMicrobes/LMM/Analysis/Results_Env_kinship_4_60_5_50_5/"
+dir_path = args[1]
 setwd(dir_path)
-source("~/Dropbox/2019-OceanMicrobes/LMM/Analysis/src.R")
+source("../src.R")
 
+
+##Load Data
+data = read.csv(args[2], row.names = 1)
+metadata = read.csv(args[3], row.names = 1)
+
+#set parameters
 multi_GRM_flag = 0 #1 = multiple variance components; 0 = otherwise 
 fixed_effect_flag = 0 #1 = the model incorporates fixed effects; 0 = otherwise 
-##Load Data
-
-setwd("~/Dropbox/2019-OceanMicrobes/LMM/Data/Gene_data/")
-data = read.csv("KEGG_ko_4_60_5_50_5.csv", row.names = 1)
-
-setwd("~/Dropbox/2019-OceanMicrobes/LMM/Data/Metadata/")
-metadata = read.csv("oceans_metadata.csv", row.names = 1)
 
 #Impute metadata
 EM_flag = 1
@@ -25,7 +24,7 @@ if(EM_flag == 1){
   
   library("Amelia")
   
-  a.out <- amelia(metadata[,-8], m = 100, cs = "Depth_m" ,p2s = 2)
+  a.out <- amelia(metadata, m = 100, cs = "Depth_m" ,p2s = 2)
   I_metadata = a.out$imputations$imp100
   
   # length(which(is.na(I_metadata))) #181 missing values
@@ -68,8 +67,8 @@ for(j in 1:dim(data)[2]){
 
 
 ##Ranking using gene expression
-setwd("~/Dropbox/2019-OceanMicrobes/LMM/Data/Gene_data/expression/")
-RNA = read.csv("41396_2019_472_MOESM10_ESM.csv")
+setwd(dir_path)
+RNA = read.csv(args[4], row.names = 1)
 
 #Data collection:
 #Seawater was size fractionated in situ onto large fraction (5µm) and small fraction (0.22µm) filters
@@ -219,8 +218,7 @@ if(dir.exists(file.path(paste0(dir_path, "/", TE_path)))){
                                  config = config_flag, hsq_txt_tmp = "GRM_reml__")
   
   colnames(VE_Results) = c("variance_explained", "SD_variance_explained", 
-                           "p_value", 
-                           "logL0", "logL", "gene_index")
+                           "p_value", "logL0", "logL", "gene_index")
   
   
   VE_Results = VE_Results[order(VE_Results$gene_index),]
@@ -261,54 +259,6 @@ t.test(head(VE_Results_sort$rank, 100),
             tail(VE_Results_sort$rank, 100))
 
 setwd(dir_path)
-write.csv(VE_Results, file = "VE_Results_Env_Kinship_4_60_5_50_5.csv")
+dir.create("Results")
+write.csv(VE_Results, file = "VE_Results_KEGG_Env_kinship.csv")
 
-VE_Results_4_60_5_50_5 = VE_Results
-VE_Results_4_60_10_50_25 = read.csv("VE_Results_Env_Kinship_4_60_10_50_25.csv", row.names = 1)
-
-library(dplyr)
-
-VE_Results_combined <- left_join(VE_Results_4_60_5_50_5, VE_Results_4_60_10_50_25, by = "KO")
-
-names(VE_Results_combined) = c("variance_explained_a", "SD_variance_explained_a",  
-                               "logL0_a", "logL_a","gene_index_a", "p_value_adjusted_a",  "KO", "rank_a",
-                               "variance_explained_b", "SD_variance_explained_b",  
-                               "logL0_b", "logL_b","gene_index_b", "p_value_adjusted_b", "rank_b")
-VE_Results_combined = VE_Results_combined[, c( "KO","variance_explained_a", "SD_variance_explained_a",  
-                               "logL0_a", "logL_a","gene_index_a", "p_value_adjusted_a",  "rank_a",
-                               "variance_explained_b", "SD_variance_explained_b",  
-                               "logL0_b", "logL_b","gene_index_b", "p_value_adjusted_b", "rank_b")]
-
-cor.test(VE_Results_combined$variance_explained_a,
-         VE_Results_combined$variance_explained_b)
-plot(VE_Results_combined$variance_explained_a,
-     VE_Results_combined$variance_explained_b, 
-     xlab = "variance_explained_4_60_5_50_5",
-     ylab = "variance_explained_4_60_10_50_25", main = "r = 0.83; p-value < 2.2e-16")
-
-rank_b = rank(VE_Results_combined$rank_b[!is.na(VE_Results_combined$rank_b)])
-rank_a = rank(-VE_Results_combined$rank_a[!is.na(VE_Results_combined$rank_a)])
-
-NA_index_b <- which(is.na(VE_Results_combined$rank_b))
-NA_index_a <- which(is.na(VE_Results_combined$rank_a))
-
-rank_b_all <- rep(-1, dim(VE_Results_combined)[1])
-rank_b_all[NA_index_b] <- NA
-rank_b_all[-NA_index_b] <- rank_b
-
-
-rank_a_all <- rep(-1, dim(VE_Results_combined)[1])
-rank_a_all[NA_index_a] <- NA
-rank_a_all[-NA_index_a] <- rank_a
-
-VE_Results_combined$rank_a = rank_a_all
-VE_Results_combined$rank_b = rank_b_all
-
-write.csv(VE_Results_combined, file = "VE_Results_Env_Kinship_4_60_5_50_5_and_4_60_10_50_25.csv")
-
-cor.test(VE_Results_combined$rank_a,
-         VE_Results_combined$rank_b)
-plot(VE_Results_combined$rank_a,
-     VE_Results_combined$rank_b, 
-     xlab = "variance_explained_4_60_5_50_5",
-     ylab = "variance_explained_4_60_10_50_25", main = "r = 0.99; p-value < 2.2e-16")

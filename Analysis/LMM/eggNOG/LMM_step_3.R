@@ -1,32 +1,22 @@
 # rm(list = ls())
 # gc()
-# 
-# args = commandArgs(trailingOnly=TRUE)
-# print(args)
+
+args = commandArgs(trailingOnly=TRUE)
+print(args)
 
 
-dir_path = "~/Dropbox/2019-OceanMicrobes/LMM/Analysis/Results_eggNOG_Env_kinship"
+dir_path = args[1]
 setwd(dir_path)
-source("~/Dropbox/2019-OceanMicrobes/LMM/Analysis/src.R")
+source("../src.R")
 
+
+##Load Data
+data = read.csv(args[2], row.names = 1)
+metadata = read.csv(args[3], row.names = 1)
+
+#set parameters
 multi_GRM_flag = 0 #1 = multiple variance components; 0 = otherwise 
 fixed_effect_flag = 0 #1 = the model incorporates fixed effects; 0 = otherwise 
-##Load Data
-
-##Load Data
-
-##Gene relative abundance
-library(data.table)
-library(R.utils)
-
-setwd("~/Dropbox/2019-OceanMicrobes/LMM/Data/Gene_data/pnps/")
-data = fread("eggNOG_OGs_4_60_5_50_5.csv.gz") #744 samples x 16426 genes
-data = data.frame(data)
-rownames(data) = data[,1]
-data = data[,-1]
-
-setwd("~/Dropbox/2019-OceanMicrobes/LMM/Data/Metadata/")
-metadata = read.csv("oceans_metadata.csv", row.names = 1)
 
 #Impute metadata
 EM_flag = 1
@@ -34,11 +24,8 @@ if(EM_flag == 1){
   
   library("Amelia")
   
-  a.out <- amelia(metadata[,-8], m = 100, cs = "Depth_m" ,p2s = 2)
+  a.out <- amelia(metadata, m = 100, cs = "Depth_m" ,p2s = 2)
   I_metadata = a.out$imputations$imp100
-  
-  # length(which(is.na(I_metadata))) #181 missing values
-  # length(which(is.na(metadata))) #794
   
   I_metadata_New = na.omit(I_metadata)
   
@@ -76,18 +63,13 @@ for(j in 1:dim(data)[2]){
 }
 
 
-
-# ind_to_remove = which(is.na(data[,k]))
-# X = as.matrix(data[-ind_to_remove,-k])
-# y = data[,k][-ind_to_remove]
-
 X = as.matrix(data)
 n = length(which(is.na(X)))
 
 #Imputing missing values using uniform distribution in [0,0.1]
-X[which(is.na(X))] = runif(n, min = 0, max = 0.1)
+X[which(is.na(X))] = runif(n, min = 0, max = 10^-6)
 
-##Create the kinship matrix - using all the Kegg genes (after imputation)
+##Create the kinship matrix - using all the eggNOG genes (after imputation)
 
 dat = metadata
 scaled.dat <- scale(dat) #normalize each column
@@ -111,10 +93,10 @@ if(any(eval) < 0){
 #one variance component
 if(multi_GRM_flag == 1){
   config_flag = "2_GRM"
-  TE_path = "Kegg_explainability"
+  TE_path = "eggNOG_explainability"
 }else{
   config_flag = "1_GRM"
-  TE_path = "Kegg_explainability"
+  TE_path = "eggNOG_explainability"
 }
 
 
@@ -160,7 +142,6 @@ t.test(head(VE_Results_sort$rank, 100),
             tail(VE_Results_sort$rank, 100))
 
 setwd(dir_path)
-# dir.create("Results")
-# setwd(paste(dir_path, "Results", sep = ""))
+dir.create("Results")
 write.csv(VE_Results, file = "VE_Results_eggNOG_Env_kinship.csv")
 

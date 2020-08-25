@@ -21,7 +21,7 @@ if(EM_flag == 1){
 
   library("Amelia")
 
-  a.out <- amelia(metadata[,-8], m = 100, cs = "Depth_m" ,p2s = 2)
+  a.out <- amelia(metadata, m = 100, cs = "Depth_m" ,p2s = 2)
   I_metadata = a.out$imputations$imp100
 
   # length(which(is.na(I_metadata))) #181 missing values
@@ -59,7 +59,7 @@ X = as.matrix(data)
 n = length(which(is.na(X)))
 
 #Imputing missing values using uniform distribution in [0,0.1]
-X[which(is.na(X))] = runif(n, min = 0, max = 10^-4)
+X[which(is.na(X))] = runif(n, min = 0, max = 10^-6)
 
 ##Create the kinship matrix - using all the Kegg genes (after imputation)
 
